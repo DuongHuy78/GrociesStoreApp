@@ -9,7 +9,7 @@ class Signup extends StatefulWidget {
 
 class _SignupPage extends State<Signup> {
 
-  bool _isShowPass = false;
+  bool _isShowPass = false; 
   bool _isAvaliableLogIn = true;
   TextEditingController _userNameController = new TextEditingController();
   TextEditingController _passWordController = new TextEditingController();

@@ -150,10 +150,10 @@ class _Account extends State<Account> {
                     (Route)=>false
                   );
                 },
-                child: Stack(
+                child: Row(
                   children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
+                    Padding(
+                      padding: const EdgeInsets.only(left: 12.0),
                       child: Image.asset(
                         'assets/images/logOutIcon.png',
                         width: 19,
@@ -161,8 +161,7 @@ class _Account extends State<Account> {
                       ),
                     ),
                     Expanded(
-                      child: Align(
-                        alignment: Alignment.center,
+                      child: Center(
                         child: Text(
                           'Log Out',
                           style: TextStyle(
