@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/explore.dart';
 import 'package:flutter_application_1/home.dart';
-import 'package:flutter_application_1/main.dart';
+import 'package:flutter_application_1/login/logIn.dart';
 import 'widget/AccountMenuItem.dart';
 import 'widget/CustomBottomBar.dart';
 
@@ -12,7 +12,7 @@ class Account extends StatefulWidget {
 }
 
 class _Account extends State<Account> {
-  int _selectedIndex = 4;
+  final int _selectedIndex = 4;
 
   @override
   Widget build(BuildContext context) {

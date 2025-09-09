@@ -27,4 +27,17 @@ class Utils {
     final String pattern = r'^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)\S{6,}$';
     return RegExp(pattern).hasMatch(password);
   }
+
+  static bool isCorrectUserName(String value) {
+    final String pattern = r'^\S{6,}$';
+    return RegExp(pattern).hasMatch(value);
+  }
+
+  static bool isCorrectFirstName(String value) {
+    return value.isNotEmpty;
+  }
+
+    static bool isCorrectLastName(String value) {
+    return value.isNotEmpty;
+  }
 }
