@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/explore.dart';
-import 'package:flutter_application_1/home.dart';
+import 'package:flutter_application_1/home/home.dart';
 import 'package:flutter_application_1/login/logIn.dart';
 import 'widget/AccountMenuItem.dart';
 import 'widget/CustomBottomBar.dart';

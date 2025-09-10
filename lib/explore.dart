@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/account.dart';
-import 'package:flutter_application_1/home.dart';
+import 'package:flutter_application_1/home/home.dart';
 import 'model/item.dart';
 import 'widget/CustomBottomBar.dart';
 
