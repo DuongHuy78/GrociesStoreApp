@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/login/login_cubit.dart';
 import 'package:flutter_application_1/login/login_state.dart';
-import 'package:flutter_application_1/home.dart';
+import 'package:flutter_application_1/home/home.dart';
 import 'package:flutter_application_1/signUp/signUp.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../utils/utils.dart';
