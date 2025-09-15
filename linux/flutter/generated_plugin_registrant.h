@@ -9,7 +9,6 @@
 
 #include <flutter_linux/flutter_linux.h>
 
-
 // Registers Flutter plugins.
 void fl_register_plugins(FlPluginRegistry* registry);
 
