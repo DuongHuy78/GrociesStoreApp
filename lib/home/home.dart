@@ -4,9 +4,8 @@ import 'package:flutter_application_1/account.dart';
 import 'package:flutter_application_1/explore.dart';
 import 'package:flutter_application_1/home/home_cubit.dart';
 import 'package:flutter_application_1/home/home_state.dart';
-import 'package:flutter_application_1/productDetails.dart';
+import 'package:flutter_application_1/productDetails/productDetails.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../model/item.dart';
 import '../widget/CustomBottomBar.dart';
 
 
@@ -233,7 +232,7 @@ class _HomeState extends State<Home> {
                                       Align(
                                         alignment: AlignmentGeometry.centerLeft,
                                         child: Text(
-                                          item.infor,
+                                          item.unit,
                                           style: TextStyle(
                                             color: Colors.grey
                                           ),
@@ -357,7 +356,7 @@ class _HomeState extends State<Home> {
                                       Align(
                                         alignment: AlignmentGeometry.centerLeft,
                                         child: Text(
-                                          item.infor,
+                                          item.unit,
                                           style: TextStyle(
                                             color: Colors.grey
                                           ),
@@ -527,7 +526,7 @@ class _HomeState extends State<Home> {
                                       Align(
                                         alignment: AlignmentGeometry.centerLeft,
                                         child: Text(
-                                          item.infor,
+                                          item.unit,
                                           style: TextStyle(
                                             color: Colors.grey
                                           ),
