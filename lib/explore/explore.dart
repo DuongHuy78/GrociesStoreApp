@@ -1,11 +1,10 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/account.dart';
+import 'package:flutter_application_1/account/account.dart';
 import 'package:flutter_application_1/explore/explore_cubit.dart';
 import 'package:flutter_application_1/explore/explore_state.dart';
 import 'package:flutter_application_1/home/home.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../model/item.dart';
 import '../widget/CustomBottomBar.dart';
 
 class Explore extends StatefulWidget{
