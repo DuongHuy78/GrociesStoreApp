@@ -7,6 +7,8 @@ import 'widget/CustomBottomBar.dart';
 
 
 class Account extends StatefulWidget {
+  const Account({super.key});
+
   @override
   State<Account> createState() => _Account();
 }

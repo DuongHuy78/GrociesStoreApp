@@ -17,25 +17,25 @@ class HomeCubit extends Cubit<HomeState> {
       item(
         imagePath: 'assets/images/apple.png',
         name: 'Organic Apples',
-        infor: '1kg, Priceg',
+        unit: '1kg, Priceg',
         price: 4.99,
       ),
       item(
         imagePath: 'assets/images/banana.png',
         name: 'Organic Bananas',
-        infor: '7pcs, Priceg',
+        unit: '7pcs, Priceg',
         price: 4.99,
       ),
       item(
         imagePath: 'assets/images/apple.png',
         name: 'Organic Apples',
-        infor: '1kg, Priceg',
+        unit: '1kg, Priceg',
         price: 4.99,
       ),
       item(
         imagePath: 'assets/images/banana.png',
         name: 'Organic Bananas',
-        infor: '7pcs, Priceg',
+        unit: '7pcs, Priceg',
         price: 4.99,
       ),
     ];
@@ -44,25 +44,25 @@ class HomeCubit extends Cubit<HomeState> {
       item(
         imagePath: 'assets/images/bellPepperRed.png',
         name: 'Bell Pepper Red',
-        infor: '1kg, Priceg',
+        unit: '1kg, Priceg',
         price: 4.99,
       ),
       item(
         imagePath: 'assets/images/ginger.png',
         name: 'Ginger',
-        infor: '7pcs, Priceg',
+        unit: '7pcs, Priceg',
         price: 4.99,
       ),
       item(
         imagePath: 'assets/images/apple.png',
         name: 'Organic Apples',
-        infor: '1kg, Priceg',
+        unit: '1kg, Priceg',
         price: 4.99,
       ),
       item(
         imagePath: 'assets/images/banana.png',
         name: 'Organic Bananas',
-        infor: '7pcs, Priceg',
+        unit: '7pcs, Priceg',
         price: 4.99,
       ),
     ];
@@ -94,25 +94,25 @@ class HomeCubit extends Cubit<HomeState> {
     item(
       imagePath: 'assets/images/beefBone.png',
       name: 'Beef Bone',
-      infor: '1kg, Priceg',
+      unit: '1kg, Priceg',
       price: 4.99,
     ),
     item(
       imagePath: 'assets/images/broilerChicken.png',
       name: 'Broiler Chicken',
-      infor: '1kg, Priceg',
+      unit: '1kg, Priceg',
       price: 4.99,
     ),
     item(
       imagePath: 'assets/images/beefBone.png',
       name: 'Beef Bone',
-      infor: '1kg, Priceg',
+      unit: '1kg, Priceg',
       price: 4.99,
     ),
     item(
       imagePath: 'assets/images/broilerChicken.png',
       name: 'Broiler Chicken',
-      infor: '1kg, Priceg',
+      unit: '1kg, Priceg',
       price: 4.99,
     ),
   ];
