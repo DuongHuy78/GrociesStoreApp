@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/account/account_state.dart';
 import 'package:flutter_application_1/account/accout_cubit.dart';
+import 'package:flutter_application_1/cart/cart.dart';
 import 'package:flutter_application_1/explore/explore.dart';
 import 'package:flutter_application_1/home/home.dart';
 import 'package:flutter_application_1/login/logIn.dart';
@@ -229,7 +230,7 @@ class _Account extends State<Account> {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Explore()));
     }
     else if(index == 2) {
-      
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Cart()));
     }
     else if(index == 3) {
       

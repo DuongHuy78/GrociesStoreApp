@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/account/account.dart';
+import 'package:flutter_application_1/cart/cart.dart';
 import 'package:flutter_application_1/explore/explore.dart';
 import 'package:flutter_application_1/home/home_cubit.dart';
 import 'package:flutter_application_1/home/home_state.dart';
@@ -594,7 +595,7 @@ class _HomeState extends State<Home> {
       Navigator.push(context, MaterialPageRoute(builder: (context) => Explore()));
     }
     else if(index == 2) {
-      
+      Navigator.push(context, MaterialPageRoute(builder: (context) => Cart()));
     }
     else if(index == 3) {
       
