@@ -37,7 +37,7 @@ class Utils {
     return value.isNotEmpty;
   }
 
-    static bool isCorrectLastName(String value) {
+  static bool isCorrectLastName(String value) {
     return value.isNotEmpty;
   }
 }
