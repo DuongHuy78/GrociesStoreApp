@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/signUp/signUp_cubit.dart';
-import 'package:flutter_application_1/signUp/signUp_state.dart';
+import 'package:flutter_application_1/signUp/cubit/signUp_cubit.dart';
+import 'package:flutter_application_1/signUp/cubit/signUp_state.dart';
 import 'package:flutter_application_1/main.dart';
-import 'package:flutter_application_1/utils/utils.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Signup extends StatefulWidget {
@@ -20,18 +19,6 @@ class _SignupPage extends State<Signup> {
   bool _isEmailTouched = false;
   bool _isPassWordTouched = false;
 
-  bool _isFirstNameCorrect = false;
-  bool _isLastNameCorrect = false;
-  bool _isUserNameCorrect = false;
-  bool _isEmailCorrect = false;
-  bool _isPassWordCorrect = false;
-
-  final String _userNameErrStr = "UserName không hợp lệ";
-  final String _passWordErrStr = "PassWord không hợp lệ";
-  final String _firstNameErrStr = "First Name không hợp lệ";
-  final String _lastNameErrStr = "Last Name không hợp lệ";
-  final String _emailErrStr = "Email không hợp lệ";
-
   @override
   Widget build(BuildContext context) {
     //để sử dụng các matarial Widget thì phải khai báo MaterialApp
@@ -39,8 +26,29 @@ class _SignupPage extends State<Signup> {
       create: (context) => SignUpCubit(),
       child: BlocListener<SignUpCubit, SignUpState>(
         listener: (context, state) {
+          if(state.generalError != '') {
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: const Text('Lỗi'),
+                content: Text(state.generalError),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                      try {
+                        context.read<SignUpCubit>().clearError();
+                      } catch (_) {}
+                    },
+                    child: const Text('Đóng'),
+                  ),
+                ],
+              ),
+            );
+          }
           if(state.isSignUpSuccess) {
             Navigator.push(context, MaterialPageRoute(builder: (context) => MyApp())); 
+          
           }
         },
         child: Scaffold(
@@ -48,7 +56,7 @@ class _SignupPage extends State<Signup> {
             body: Container(
               padding: EdgeInsets.fromLTRB(20, 50, 20, 0),
               child: Center(
-                child: BlocBuilder<SignUpCubit, SignUpState>(
+                child: BlocBuilder<SignUpCubit, SignUpState>( 
                   builder: (context, state) {
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,11 +90,11 @@ class _SignupPage extends State<Signup> {
                           child: TextField(
                             onChanged: (value) {
                               _isFirstNameToched = true;
-                              _isFirstNameCorrect = Utils.isCorrectFirstName(value);
+                              context.read<SignUpCubit>().validateFirstname(value);
                               context.read<SignUpCubit>().firstNameChanged(value);
                             },
                             decoration: InputDecoration(
-                              errorText: !_isFirstNameCorrect && _isFirstNameToched ? _firstNameErrStr : null,
+                              errorText: state.errorFirstname != '' && _isFirstNameToched ? state.errorFirstname : null,
                               labelText: "FIRST NAME",
                               labelStyle: TextStyle(
                                 color: Colors.grey,
@@ -102,11 +110,11 @@ class _SignupPage extends State<Signup> {
                           child: TextField(
                             onChanged: (value) {
                               _isLastNameTouched = true;
+                              context.read<SignUpCubit>().validateFirstname(value);
                               context.read<SignUpCubit>().lastNameChanged(value);
-                              _isLastNameCorrect = Utils.isCorrectLastName(value);
                             },
                             decoration: InputDecoration(
-                              errorText: !_isLastNameCorrect && _isLastNameTouched ? _lastNameErrStr : null,
+                              errorText: state.errorLastname != '' && _isLastNameTouched ? state.errorLastname : null,
                               labelText: "LAST NAME",
                               labelStyle: TextStyle(
                                 color: Colors.grey,
@@ -123,10 +131,10 @@ class _SignupPage extends State<Signup> {
                             onChanged: (value) {
                               _isUserNameTouched = true;
                               context.read<SignUpCubit>().userNameChanged(value);
-                              _isUserNameCorrect = Utils.isCorrectUserName(value);
+                              context.read<SignUpCubit>().validateLastname(value);
                             },
                             decoration: InputDecoration(
-                              errorText: !_isUserNameCorrect && _isUserNameTouched ? _userNameErrStr : null,
+                              errorText: state.errorUsername != '' && _isUserNameTouched ? state.errorUsername : null,
                               labelText: "USER NAME",
                               labelStyle: TextStyle(
                                 color: Colors.grey,
@@ -143,10 +151,10 @@ class _SignupPage extends State<Signup> {
                             onChanged: (value) {
                               _isEmailTouched = true;
                               context.read<SignUpCubit>().emailChanged(value);
-                              _isEmailCorrect = Utils.isCorrectEmail(value);
+                              context.read<SignUpCubit>().validateEmail(value);
                             },
                             decoration: InputDecoration(
-                              errorText: !_isEmailCorrect && _isEmailTouched ? _emailErrStr : null,
+                              errorText: state.errorEmail  != '' && _isEmailTouched ? state.errorEmail : null,
                               labelText: "EMAIL",
                               labelStyle: TextStyle(
                                 color: Colors.grey,
@@ -169,12 +177,12 @@ class _SignupPage extends State<Signup> {
                                 onChanged: (value) {
                                   _isPassWordTouched = true;
                                   context.read<SignUpCubit>().passwordChanged(value);
-                                  _isPassWordCorrect = Utils.isCorrectPassWord(value);
+                                  context.read<SignUpCubit>().validatePassword(value);
                                 },
                                   style: TextStyle(fontSize: 18, color: Colors.black),
                                   obscureText: !_isShowPass,
                                   decoration: InputDecoration(
-                                    errorText: !_isPassWordCorrect && _isPassWordTouched ? _passWordErrStr : null,
+                                    errorText: state.errorPassword != '' && _isPassWordTouched ? state.errorPassword : null,
                                     labelText: "PASSWORD",
                                     labelStyle: TextStyle(
                                       color: Colors.grey,
@@ -231,7 +239,7 @@ class _SignupPage extends State<Signup> {
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.green
                               ),
-                              onPressed: (_isFirstNameCorrect && _isLastNameCorrect && _isUserNameCorrect && _isEmailCorrect && _isPassWordCorrect)
+                              onPressed: (state.errorFirstname == '' && state.errorLastname == '' && state.errorUsername == '' && state.errorEmail == '' && state.errorPassword == '')
                                 ? context.read<SignUpCubit>().signUp
                                 : null, 
                               child: Text("Sign Up", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600),),

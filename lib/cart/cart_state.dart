@@ -1,5 +1,3 @@
-
-import 'package:flutter_application_1/foodType/foodType_model.dart';
 import 'package:flutter_application_1/item/item_model.dart';
 
 abstract class CartState {}
