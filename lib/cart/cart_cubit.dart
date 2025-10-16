@@ -1,9 +1,5 @@
-import 'dart:ui';
-
 import 'package:flutter_application_1/cart/cart_state.dart';
-import 'package:flutter_application_1/foodType/foodType_model.dart';
 import 'package:flutter_application_1/item/item_model.dart';
-import 'package:flutter_application_1/productDetails/productDetails_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CartCubit extends Cubit<CartState>{

@@ -1,7 +1,7 @@
 
 import 'login/logIn.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/login/login_cubit.dart';
+import 'package:flutter_application_1/login/cubit/login_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
