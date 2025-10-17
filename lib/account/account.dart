@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/account/account_state.dart';
-import 'package:flutter_application_1/account/accout_cubit.dart';
+import 'package:flutter_application_1/account/cubit/account_state.dart';
+import 'package:flutter_application_1/account/cubit/account_cubit.dart';
 import 'package:flutter_application_1/cart/cart.dart';
 import 'package:flutter_application_1/explore/explore.dart';
 import 'package:flutter_application_1/home/home.dart';
@@ -23,8 +23,37 @@ class _Account extends State<Account> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AccoutCubit(),
-      child: BlocBuilder<AccoutCubit, AccountState>(
+      create: (context) => AccountCubit()..fetchAccount(),
+      child: BlocListener<AccountCubit, AccountState>(
+        listener: (context, state) {
+          if(!state.isAccessActive) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (_) => LogIn()),
+              (Route<dynamic> route) => false,
+            );
+          }
+          
+          if(state.generalError != '') {
+            showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: const Text('Lỗi'),
+                content: Text(state.generalError),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                      context.read<AccountCubit>().clearError();
+                    },
+                    child: const Text('Đóng'),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+        child: BlocBuilder<AccountCubit, AccountState>(
         builder: (context, state) {
           return Scaffold(
             backgroundColor: Colors.white,
@@ -179,6 +208,7 @@ class _Account extends State<Account> {
                           ),
                         );
                         if (result == true) {
+                          context.read<AccountCubit>().deleteToken();
                           Navigator.pushAndRemoveUntil(
                             context,
                             MaterialPageRoute(builder: (context) => LogIn()),
@@ -220,6 +250,8 @@ class _Account extends State<Account> {
         },
 
       ),
+
+      )
     );
   }
   void _onBottomBarClick(int index) {

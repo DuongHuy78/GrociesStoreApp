@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/login/login_cubit.dart';
-import 'package:flutter_application_1/login/login_state.dart';
+import 'package:flutter_application_1/login/cubit/login_cubit.dart';
+import 'package:flutter_application_1/login/cubit/login_state.dart';
 import 'package:flutter_application_1/home/home.dart';
 import 'package:flutter_application_1/signUp/signUp.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../utils/utils.dart';
 
 class LogIn extends StatefulWidget {
   @override
@@ -15,8 +14,6 @@ class LogIn extends StatefulWidget {
 class _LogInState extends State<LogIn> {
 
   bool _isShowPass = false;
-  final String _emailErrStr = "Vui lòng nhập đúng định dạng email";
-  final String _passWordErrStr = "Vui lòng nhập mật khẩu có ít nhất 6 kí tự, chứa ít nhất 1 chữ hoa, 1 chữ thường và 1 số";
   bool isEmailToched = false;
   bool isPassWordToched = false;
 
@@ -26,8 +23,29 @@ class _LogInState extends State<LogIn> {
     //để sử dụng các matarial Widget thì phải khai báo MaterialApp
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
+        if(state.generalError != '') {
+          showDialog(
+              context: context,
+              builder: (ctx) => AlertDialog(
+                title: const Text('Lỗi'),
+                content: Text(state.generalError),
+                actions: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(ctx).pop();
+                      try {
+                        context.read<LoginCubit>().clearError();
+                      } catch (_) {}
+                    },
+                    child: const Text('Đóng'),
+                  ),
+                ],
+              ),
+            );
+        }
         if(state.isLoginSuccess) {
-           Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
+          context.read<LoginCubit>().clearSuccessState();
+          Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
         }
       },
       child: Scaffold(
@@ -73,11 +91,10 @@ class _LogInState extends State<LogIn> {
                                 });
                               }
                               context.read<LoginCubit>().emailChanged(value);
-                              
                             },
                         
                         decoration: InputDecoration(
-                          errorText: !Utils.isCorrectEmail(state.email) && isEmailToched? _emailErrStr: null,
+                          errorText: state.errorEmail != '' && isEmailToched? state.errorEmail: null,
                           labelText: "EMAIL",
                           labelStyle: TextStyle(
                             color: Colors.grey,
@@ -100,13 +117,12 @@ class _LogInState extends State<LogIn> {
                                 });
                               }
                               context.read<LoginCubit>().passwordChanged(value);
-                              
                             },
                               style: TextStyle(fontSize: 18, color: Colors.black),
                               obscureText: !_isShowPass,
                               decoration: InputDecoration(
                                 errorMaxLines: 3,
-                                errorText: !Utils.isCorrectPassWord(state.password) && isPassWordToched? _passWordErrStr: null,
+                                errorText: state.errorPassword != '' && isPassWordToched? state.errorPassword: null,
                                 labelText: "PASSWORD",
                                 labelStyle: TextStyle(
                                   color: Colors.grey,

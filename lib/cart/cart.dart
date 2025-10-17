@@ -25,7 +25,7 @@ class _Cart extends State<Cart> {
   bool isShowFoodType = false;
   bool isShowItem = false;
   
-  int _selectedIndex = 2;
+  final int _selectedIndex = 2;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,7 +53,6 @@ class _Cart extends State<Cart> {
               BlocBuilder<FoodTypeCubit, FoodTypeState>(
                 builder: (context, state) {
                   if(state is FoodTypeLoadedState) {
-                    final FoodTypeCubit foodTypeCubit = context.read<FoodTypeCubit>();
                     final foodTypes = state.foodTypes;
                     return Container(
                       color: Colors.green,
