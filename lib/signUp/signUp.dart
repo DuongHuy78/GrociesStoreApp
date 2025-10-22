@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/signUp/cubit/signUp_cubit.dart';
+import 'package:flutter_application_1/signUp/cubit/signup_cubit.dart';
 import 'package:flutter_application_1/signUp/cubit/signUp_state.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

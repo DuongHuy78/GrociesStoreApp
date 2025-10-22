@@ -1,9 +1,14 @@
 
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_application_1/login/data/login_request.dart';
 import 'package:flutter_application_1/login/data/login_response.dart';
 import 'package:flutter_application_1/storage/storage.dart';
+import 'package:flutter_application_1/login/api/login_api.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:retrofit/dio.dart';
 import 'login_state.dart';
 import '../../utils/utils.dart';
 
@@ -29,6 +34,10 @@ class LoginCubit extends Cubit<LoginState>{
   //nên sẽ tiếp tục vào vì vậy phải set lại hoặc kiểm tra token rồi mới cho vào
   void clearSuccessState() {
     emit(state.copyWith(isLoginSuccess: false));
+  }
+
+  void clearData() {
+    emit(state.copyWith(email: "", password: ""));
   }
 
   void validateEmail(String value) {
@@ -57,13 +66,12 @@ class LoginCubit extends Cubit<LoginState>{
     if(state.errorEmail == ''
       && state.errorPassword == '') {
         try {
-          final Response response = await dio.post(
-            "https://us-central1-skin-scanner-3c419.cloudfunctions.net/base/v1/auth-service/login",
-            data: LoginRequest(email: state.email, password: state.password).toJson());
+          final _loginApi = LoginApi(dio);
+          final LoginRequest request = LoginRequest(email: state.email, password: state.password);
+          final HttpResponse<LoginResponse> response = await _loginApi.login(request);
 
-          if(response.statusCode == 200) {
-            LoginResponse loginResponse = LoginResponse.fromJson(response.data);
-            Storage.saveToken(loginResponse.accessToken);
+          if(response.response.statusCode == 200) {
+            Storage.saveToken(response.data.data.tokens.accessToken);
             emit(state.copyWith(isLoading: false, isLoginSuccess: true));
           }
           else{
