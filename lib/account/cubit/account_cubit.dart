@@ -1,8 +1,10 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/account/api/account_api.dart';
 import 'package:flutter_application_1/account/cubit/account_state.dart';
 import 'package:flutter_application_1/account/data/account_response.dart';
 import 'package:flutter_application_1/storage/storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:retrofit/retrofit.dart';
 
 class AccountCubit extends Cubit<AccountState>{
   
@@ -24,25 +26,28 @@ class AccountCubit extends Cubit<AccountState>{
     
 
     try {
-      Response response = await dio.get(
-        "https://us-central1-skin-scanner-3c419.cloudfunctions.net/base/v1/user-service/me",
-        options: Options(
-          headers: {'Authorization' : 'Bearer $token'}
-        )
-      );
+      // Response response = await dio.get(
+      //   "https://us-central1-skin-scanner-3c419.cloudfunctions.net/base/v1/user-service/me",
+      //   options: Options(
+      //     headers: {'Authorization' : 'Bearer $token'}
+      //   )
+      // );
+      Dio dio = Dio();
+      dio.options.headers['Authorization'] = 'Bearer $token';
+      print(token);
 
-      if(response.statusCode == 200) {
-        AccountResponse accountResponse = AccountResponse.fromJson(response.data);
+      AccountApi _accountApi = AccountApi(dio);
+      final HttpResponse<AccountResponse> response = await _accountApi.getInfor();
+
+      if(response.response.statusCode == 200) {
         emit(state.copyWith(
-          email: accountResponse.email, 
-          name:accountResponse.username, 
-          avatarPath: accountResponse.avatarPath
+          email: response.data.data.userInfo.email, 
+          name:response.data.data.userInfo.username, 
+          avatarPath: response.data.data.userInfo.profilePic
         ));
-        print("owr dayyyyyyyyyyyyyyyyyyyyyyyyyyyyyy");
-        print(accountResponse.avatarPath);
       }
       else {
-        emit(state.copyWith(generalError: "Mã lỗi:  + ${response.statusCode}"));
+        emit(state.copyWith(generalError: "Mã lỗi:  + ${response.response.statusCode}"));
       }
     }
     catch(e) {

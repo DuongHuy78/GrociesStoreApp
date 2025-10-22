@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter_application_1/signUp/api/signup_api.dart';
 import 'package:flutter_application_1/signUp/data/signUp_request.dart';
 import 'package:flutter_application_1/signUp/data/signUp_reseponse.dart';
-import 'package:flutter_application_1/storage/storage.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:retrofit/dio.dart';
 import 'signUp_state.dart';
 import '../../utils/utils.dart';
 
@@ -87,21 +90,31 @@ class SignUpCubit extends Cubit<SignUpState> {
       && state.errorFirstname == ''
       && state.errorLastname == '') {
         try {
-
+          Dio dio = new Dio();
+          final _signupApi = SignupApi(dio);
           emit(state.copyWith(isLoading: true));
-
-          final response = await dio.post(
-            "https://us-central1-skin-scanner-3c419.cloudfunctions.net/base/v1/auth-service/register",
-            data: SignupRequest(
+          final request = SignupRequest(
               username: state.userName,
               email: state.email,
               firstName: state.firstName,
               lastName: state.lastName,
               password: state.password,
-            ).toJson(),
-          );
+            );
 
-          if(response.statusCode == 201) {
+            final HttpResponse<SignupReseponse> response= await _signupApi.signup(request);
+
+          // final response = await dio.post(
+          //   "https://us-central1-skin-scanner-3c419.cloudfunctions.net/base/v1/auth-service/register",
+          //   data: SignupRequest(
+          //     username: state.userName,
+          //     email: state.email,
+          //     firstName: state.firstName,
+          //     lastName: state.lastName,
+          //     password: state.password,
+          //   ).toJson(),
+          // );
+
+          if(response.response.statusCode== 201) {
             emit(state.copyWith(isLoading: false, isSignUpSuccess: true));
           } else {
             emit(state.copyWith(isLoading: false, isSignUpSuccess: false));

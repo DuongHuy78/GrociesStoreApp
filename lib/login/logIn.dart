@@ -45,6 +45,7 @@ class _LogInState extends State<LogIn> {
         }
         if(state.isLoginSuccess) {
           context.read<LoginCubit>().clearSuccessState();
+          context.read<LoginCubit>().clearData();
           Navigator.push(context, MaterialPageRoute(builder: (context) => Home()));
         }
       },
